@@ -1,0 +1,598 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>High Level Plan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.19/dataRender/datetime.js"></script>
+  <script type="text/javascript" charset="utf8" src="script.js"></script>
+  <script type="text/javascript" charset="utf8" src="date.js"></script>
+   <script type="text/javascript">
+        var tableToExcel = (function () {
+            var uri = 'data:application/vnd.ms-excel;base64,'
+                , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+                , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+                , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+            return function (table, name) {
+                if (!table.nodeType) table = document.getElementById(table)
+                var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+                var blob = new Blob([format(template, ctx)]);
+                var blobURL = window.URL.createObjectURL(blob);
+                if (ifIE()) {
+                    csvData = table.innerHTML;
+                    if (window.navigator.msSaveBlob) {
+                        var blob = new Blob([format(template, ctx)], {
+                            type: "text/html"
+                        });
+                        navigator.msSaveBlob(blob, '' + name + '.xls');
+                    }
+                }
+                else
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+        function ifIE() {
+            var isIE11 = navigator.userAgent.indexOf(".NET CLR") > -1;
+            var isIE11orLess = isIE11 || navigator.appVersion.indexOf("MSIE") != -1;
+            return isIE11orLess;
+        }
+    </script>
+</head>
+
+<body >
+  <img src="images/l1.jpg">
+  <h3>High Level Plan Generator</h3>
+  <div class="container">
+    <div class="form-group">
+      <form action="index.html" method="post" name="Form" enctype="multipart/form-data">
+        <br /><br />
+        <br /><br />
+        <div class="form-group" id="displayOptions">
+<div class="dwn" id="dwn">
+
+
+          <label>Domain</label>
+          <select autocomplete="off" class="form-group" id="domain">
+            <option id="1" disabled selected="selected">---Select---</option>
+            <option id="2" value="AMI">AMI</option>
+            <option id="3" value="Customer">Customer</option>
+            <option id="4" value="GridWave1">GRID Wave 1</option>
+            <option id="5" value="GridWave2">GRID Wave 2</option>
+          </select><br />
+          <label for="env">Environment</label>
+          <form name="envForm">
+            <input type="radio" name="env" id="int" value="int" checked>&nbsp; INT &nbsp;
+            <input type="radio" name="env" id="uat" value="uat">&nbsp; UAT &nbsp;
+            <input type="radio" name="env" id="prod" value="prod">&nbsp; PROD
+          </form>
+          <br />
+  <div id="rollback">
+              <label for="rollback">Do you want to add tasks for Rollback?</label>
+              <input type="radio" name="rollback" id="rollbackYes" value="Yes">&nbsp;Yes &nbsp;
+              <input type="radio" name="rollback" id="rollbackNo" value="No">&nbsp; No &nbsp;
+            </div>
+            <br />
+          <label for="poc">Source System</label>
+          <input type="text" id="source" name="source" placeholder="Source System ">
+          <br />
+          <label for="poc">Developer</label>
+          <input type="text" id="devpoc" name="devpoc" placeholder="Dev Point of Contact ">
+          <br />
+          <input class="btn btn-info" type="button" name="Populate" value="Customize" onclick="enterDev();">
+        </div>
+</div>
+<input type="button" style="display:none"class="btn btn-info" id="export2"onclick="tableToExcel('myTable', 'Export HTML Table to Excel')" value="Export to Excel" />
+        <br />
+<br/>
+        <table id="myTable" class="display">
+          <thead>
+            <tr>
+
+              <th>User Story</th>
+              <th>Dependency</th>
+              <th>Description</th>
+              <th>Owner</th>
+              <th>Dev PoC</th>
+              <th>Deployment Status</th>
+              <th>Validation Status</th>
+              <th>Comments</th>
+              <th>Start Time IST</th>
+              <th>End Time IST</th>
+              <th>Start Time CST</th>
+              <th>End Time CST</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Vipul Bhatnagar</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown1" value="text"onchange="myFunction();changeColor(1)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown1" value="text"onchange="myFunction();changeColor(1)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Aditya</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown2" onchange="myFunction();changeColor(2)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown2" value="text"onchange="myFunction();changeColor(2)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Vipul Bhatnagar</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown3" onchange="myFunction();changeColor(3)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown3" value="text"onchange="myFunction();changeColor(3)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Shamshoddin</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown4" onchange="myFunction();changeColor(4)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown4" value="text"onchange="myFunction();changeColor(4)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Naveen</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown5" onchange="myFunction();changeColor(5)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown5" value="text"onchange="myFunction();changeColor(5)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Aditya</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown6" onchange="myFunction();changeColor(6)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown6" value="text"onchange="myFunction();changeColor(6)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Akshay</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown7" onchange="myFunction();changeColor(7)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown7" value="text"onchange="myFunction();changeColor(7)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Akshay</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown8" onchange="myFunction();changeColor(8)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown8" value="text"onchange="myFunction();changeColor(8)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Raj Batchu</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown9" onchange="myFunction();changeColor(9)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown9" value="text"onchange="myFunction();changeColor(9)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Aditya</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown10" onchange="myFunction();changeColor(10)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown10" value="text"onchange="myFunction();changeColor(10)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Shamshoddin</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown11" onchange="myFunction();changeColor(11)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown11" value="text"onchange="myFunction();changeColor(11)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Akshay</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown12" onchange="myFunction();changeColor(12)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown12" value="text"onchange="myFunction();changeColor(12)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Aditya</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown13" onchange="myFunction();changeColor(13)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown13" value="text"onchange="myFunction();changeColor(13)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Shamshoddin</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown14" onchange="myFunction();changeColor(14)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown14" value="text"onchange="myFunction();changeColor(14)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Raj Batchu</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown15" onchange="myFunction();changeColor(15)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown15" value="text"onchange="myFunction();changeColor(15)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Naveen</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown16" onchange="myFunction();changeColor(16)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown16" value="text"onchange="myFunction();changeColor(16)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td contenteditable="true"></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td>Aditya</td>
+              <td></td>
+              <td> <select autocomplete="off" class="dropbtn" id="myDropdown17" onchange="myFunction();changeColor(17)">
+                  <option disabled selected value> -- select -- </option>
+                  <option id="2" select="selected" value="notStarted">Not Started</option>
+                  <option id="3" value="inProgress">In Progress</option>
+                  <option id="4" value="resolved">Resolved</option>
+                  <option id="5" value="completed">Completed</option>
+                </select></td>
+                <td> <select autocomplete="off" class="dropbtn" id="Dropdown17" value="text"onchange="myFunction();changeColor(17)">
+                    <option disabled selected value> -- select -- </option>
+                    <option id="2" select="selected" value="notStarted">Not Started</option>
+                    <option id="3" value="inProgress">In Progress</option>
+                    <option id="4" value="resolved">Resolved</option>
+                    <option id="5" value="completed">Completed</option>
+                  </select></td>
+              <td contenteditable="true"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+
+
+          </tbody>
+        </table>
+    </div>
+
+            <script type="text/javascript">
+
+              $(document).ready(function() {
+              //  $('#myTable').DataTable();
+                $('#myTable').dataTable( {
+       "aLengthMenu": [[25, 50, 75, -1], [25, 50, 75, "All"]],
+       "pageLength": 25,
+      "dom": 'Bfrtip',
+      "select": {
+                 items: 'cell'
+             }
+       } );
+              });
+            </script>
+
+    </form>
+  </div>
+  </div>
+
+</body>
+
+</html>

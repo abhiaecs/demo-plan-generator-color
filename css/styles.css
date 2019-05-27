@@ -1,0 +1,144 @@
+.dataTables_wrapper {
+    font-family: tahoma;
+    font-size: 8px;
+    position: relative;
+    clear: both;
+    *zoom: 1;
+    zoom: 1;
+    color: black;
+}
+input[type=file], select {
+  width: 25%;
+  font-size: 90%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+input[type=text], select {
+  width: auto;
+  font-size: 90%;
+  padding: 8px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.1);
+  color: black;
+}
+
+label {
+  display: inline-block;
+  width: 200px;
+}
+
+select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+  width:150px;
+}
+select option {
+  background-color: white;
+  color: black;
+  font-size: 8px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+}
+
+body {
+  color: black;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: right;
+  font-size: 90%;
+}
+
+h4 {
+  color: white;
+  background-color: black;
+  font-style: bold;
+  font-size: 1.875em;
+}
+
+h3 {
+  font-size: 3vw;
+  text-align: center;
+  font-variant: small-caps;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  color: black;
+  font-weight: bold;
+  padding: 8px;
+  font-size: 8px;
+  border: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+width: 100px;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #000;
+  min-width: 80px;
+  box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  padding: 8px 10px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+  display: block;
+}
+select option[value="notStarted"] {
+  background: rgba(255, 0, 0, 1);
+}
+
+select option[value="inProgress"] {
+  background: rgba(240, 255, 0, 1);
+}
+
+select option[value="resolved"] {
+   background: rgba(221, 221, 221, 1);
+}
+
+select option[value="completed"] {
+  background: green;
+}
