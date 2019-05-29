@@ -98,6 +98,7 @@ if(document.getElementById('rollbackNo').checked ){
     }
     document.getElementById('myTable').rows[i].cells[4].innerHTML = document.getElementById('devpoc').value;
   }
+  document.getElementById('myTable').rows[1].cells[3].innerHTML = document.getElementById('devpoc').value;
   document.getElementById('dwn').style.display="none";
   document.getElementById('export2').style.display="block";
 }
