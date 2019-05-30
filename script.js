@@ -42,49 +42,49 @@ if(document.getElementById('rollbackNo').checked ){
     switch (i) {
 
       case 1:
-        Task = "DeploymentEntryTasks";
+        Task = "Deployment Entry Tasks";
         break;
       case 2:
-        Task = "DeploymentRunbookandPre-deploymentchecklistreview";
+        Task = "Deployment Runbook and Pre-deployment checklist review";
         break;
       case 4:
-        Task = "RollbackofNiFiComponents";
+        Task = "Rollback of NiFi Components";
         break;
       case 5:
-        Task = "RollbackofKafkaComponents";
+        Task = "Rollback of Kafka Components";
         break;
       case 6:
-        Task = "RollbackofHiveComponents";
+        Task = "Rollback of Hive Components";
         break;
       case 7:
-        Task = "RollbackofHadoopComponents";
+        Task = "Rollback of Hadoop Components";
         break;
       case 8:
-        Task = "RollbackofNASComponents";
+        Task = "Rollback of NAS Components";
         break;
       case 9:
-        Task = "RollbackofOGGComponents";
+        Task = "Rollback of OGG Components";
         break;
         case 10:
-          Task = "RollbackofExadataComponents";
+          Task = "Rollback of Exadata Components";
           break;
       case 11:
-        Task = "DeploymentofUnixComponents";
+        Task = "Deployment of Unix Components";
         break;
       case 12:
-        Task = "DeploymentofHDFSComponents";
+        Task = "Deployment of HDFS Components";
         break;
       case 13:
-        Task = "DeploymentofHiveComponents";
+        Task = "Deployment of Hive Components";
         break;
       case 14:
-        Task = "DeploymentofNiFiComponents";
+        Task = "Deployment of NiFi Components";
         break;
       case 16:
-        Task = "DeploymentofKafkaComponents";
+        Task = "Deployment of Kafka Components";
         break;
       case 17:
-        Task = "DeploymentofExadataComponents";
+        Task = "Deployment of Exadata Components";
         break;
     }
     if (i == 3) {
