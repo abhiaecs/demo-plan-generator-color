@@ -96,7 +96,7 @@ if(document.getElementById('rollbackNo').checked ){
     } else {
       document.getElementById('myTable').rows[i].cells[2].innerHTML = "SPP-" + document.getElementById('domain').value + "-" + document.getElementById('source').value + Environment + Task;
     }
-    document.getElementById('myTable').rows[i].cells[4].innerHTML = document.getElementById('devpoc').value;
+    document.getElementById('myTable').rows[i].cells[5].innerHTML = document.getElementById('devpoc').value;
   }
   document.getElementById('myTable').rows[1].cells[3].innerHTML = document.getElementById('devpoc').value;
   document.getElementById('dwn').style.display="none";
@@ -128,26 +128,6 @@ function changeColor(i) {
   var strUser = e.options[e.selectedIndex].value;
   switch (strUser) {
     case 'select':
-      document.getElementById('myTable').rows[i].cells[5].style = "background-color:black";
-      break;
-    case 'notStarted':
-      document.getElementById('myTable').rows[i].cells[5].style = "background-color:rgba(236, 100, 75, 1)";
-      break;
-    case 'inProgress':
-      document.getElementById('myTable').rows[i].cells[5].style = "background-color:yellow";
-      break;
-    case 'resolved':
-      document.getElementById('myTable').rows[i].cells[5].style = "background-color:rgba(107, 185, 240, 1)";
-      break;
-    case 'completed':
-      document.getElementById('myTable').rows[i].cells[5].style = "background-color:rgba(123, 239, 178, 1)";
-      break;
-    default:
-  }
-  var e = document.getElementById('Dropdown' + i);
-  var strUser = e.options[e.selectedIndex].value;
-  switch (strUser) {
-    case 'select':
       document.getElementById('myTable').rows[i].cells[6].style = "background-color:black";
       break;
     case 'notStarted':
@@ -161,6 +141,26 @@ function changeColor(i) {
       break;
     case 'completed':
       document.getElementById('myTable').rows[i].cells[6].style = "background-color:rgba(123, 239, 178, 1)";
+      break;
+    default:
+  }
+  var e = document.getElementById('Dropdown' + i);
+  var strUser = e.options[e.selectedIndex].value;
+  switch (strUser) {
+    case 'select':
+      document.getElementById('myTable').rows[i].cells[7].style = "background-color:black";
+      break;
+    case 'notStarted':
+      document.getElementById('myTable').rows[i].cells[7].style = "background-color:rgba(236, 100, 75, 1)";
+      break;
+    case 'inProgress':
+      document.getElementById('myTable').rows[i].cells[7].style = "background-color:yellow";
+      break;
+    case 'resolved':
+      document.getElementById('myTable').rows[i].cells[7].style = "background-color:rgba(107, 185, 240, 1)";
+      break;
+    case 'completed':
+      document.getElementById('myTable').rows[i].cells[7].style = "background-color:rgba(123, 239, 178, 1)";
       break;
     default:
   }
